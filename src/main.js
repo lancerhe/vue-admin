@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import router from '@/route'
 import App from '@/App'
-import ElementUI from 'element-ui'
 
-import 'element-ui/lib/theme-chalk/index.css'//element-ui的css
-Vue.use(ElementUI)
+import 'vue2-admin-lte/src/lib/css'
+import 'vue2-admin-lte/src/lib/script'
 
 Vue.config.productionTip = false
 

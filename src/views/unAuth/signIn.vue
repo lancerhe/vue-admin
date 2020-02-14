@@ -1,63 +1,65 @@
 <template>
-    <div class="login-box">
-        <div class="login-logo">
-            Company
-        </div>
-        <!-- /.login-logo -->
-        <div class="login-box-body">
-            <p class="login-box-msg">
-                Sign in to start your session
-            </p>
-
-            <div id="default-container">
-                <form @submit="signIn">
-                    <div class="form-group has-feedback ">
-                        <input
-                                v-model="user.username"
-                                type="email"
-                                name="email"
-                                class="form-control"
-                                value=""
-                                placeholder="Email"
-                        >
-                        <span class="glyphicon glyphicon-envelope form-control-feedback" />
-                    </div>
-                    <div class="form-group has-feedback ">
-                        <input
-                                v-model="user.password"
-                                type="password"
-                                name="password"
-                                class="form-control"
-                                placeholder="Password"
-                        >
-                        <span class="glyphicon glyphicon-lock form-control-feedback" />
-                    </div>
-                    <div class="row">
-                        <!--            <div class="col-xs-8">-->
-                        <!--              <a-->
-                        <!--                class="text-center"-->
-                        <!--              >I forgot my password</a>-->
-                        <!--            </div>-->
-                        <!-- /.col -->
-                        <div class="col-xs-4">
-                            <button
-                                    type="submit"
-                                    class="btn btn-primary btn-block btn-flat"
-                            >
-                                Sign In
-                            </button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="login-box">
+    <div class="login-logo">
+      Company
     </div>
-    <!-- /.login-box-body -->
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+      <p class="login-box-msg">
+        Sign in to start your session
+      </p>
+
+      <div id="default-container">
+        <form @submit="signIn">
+          <div class="form-group has-feedback ">
+            <input
+              v-model="user.username"
+              type="email"
+              name="email"
+              class="form-control"
+              value=""
+              placeholder="Email"
+            >
+            <span class="glyphicon glyphicon-envelope form-control-feedback" />
+          </div>
+          <div class="form-group has-feedback ">
+            <input
+              v-model="user.password"
+              type="password"
+              name="password"
+              class="form-control"
+              placeholder="Password"
+            >
+            <span class="glyphicon glyphicon-lock form-control-feedback" />
+          </div>
+          <div class="row">
+            <!--            <div class="col-xs-8">-->
+            <!--              <a-->
+            <!--                class="text-center"-->
+            <!--              >I forgot my password</a>-->
+            <!--            </div>-->
+            <!-- /.col -->
+            <div class="col-xs-4">
+              <button
+                type="submit"
+                class="btn btn-primary btn-block btn-flat"
+              >
+                Sign In
+              </button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /.login-box-body -->
 </template>
 
 <script>
 import { signInApi } from '@/api'
+import store from '@/store'
+import router from '@/route'
 
 export default {
   data () {
@@ -70,8 +72,12 @@ export default {
   },
   methods: {
     signIn () {
-      signInApi(this.user).then(data => {
+      signInApi(this.user).then(res => {
+        if(res.status === 401) {
 
+        } else {
+          store.commit('setAuthorization', res.data.token)
+        }
       })
     }
   }

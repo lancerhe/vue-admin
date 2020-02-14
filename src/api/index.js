@@ -19,14 +19,11 @@ axios.interceptors.request.use(
 )
 
 axios.interceptors.response.use((res) => {
-  // if(!res.data.success) {
-  //   return Promise.reject(res);
-  // }
   return res
 }, (error) => {
   return Promise.reject(error)
 })
 
 export const signInApi = params => {
-  return axios.post(`/ap/sign-in`, params).then(res => res.data)
+  return axios.post(`/ap/sign-in`, params).then(res => res)
 }

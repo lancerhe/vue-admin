@@ -35,18 +35,18 @@ router.beforeEach((to, from, next) => {
   let token = store.getters.getAuthorization()
 
   if (to.path === '/') {
-    next({ name: 'Home'} )
+    next({ name: 'Home' })
   }
 
   if (to.meta.requiresAuth === false) {
     if (token !== '') {
-      next({ name: 'Home'} )
+      next({ name: 'Home' })
     } else {
       next()
     }
   } else {
     if (token === '') {
-      next({ name: 'SignIn'} )
+      next({ name: 'SignIn', query: { redirect: to.fullPath } })
     } else {
       next()
     }

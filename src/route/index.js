@@ -9,6 +9,7 @@ Vue.use(VueRouter)
 export const signInPath = '/ap/sign-in'
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: signInPath,

@@ -10,7 +10,7 @@
       </p>
 
       <div id="default-container">
-        <form @submit="signIn">
+        <form>
           <div class="form-group has-feedback ">
             <input
               v-model="user.username"
@@ -41,8 +41,9 @@
             <!-- /.col -->
             <div class="col-xs-4">
               <button
-                type="submit"
+                type="button"
                 class="btn btn-primary btn-block btn-flat"
+                @click="signIn"
               >
                 Sign In
               </button>
@@ -59,7 +60,6 @@
 <script>
 import { signInApi } from '@/api'
 import store from '@/store'
-import router from '@/route'
 
 export default {
   data () {
@@ -72,12 +72,10 @@ export default {
   },
   methods: {
     signIn () {
-      signInApi(this.user).then(res => {
-        if(res.status === 401) {
-
-        } else {
-          store.commit('setAuthorization', res.data.token)
-        }
+      signInApi(this.user).then(responseBody => {
+        store.commit('setAuthorization', responseBody.token)
+      }).catch(e => {
+        this.$toasted.error(e.response.data.message)
       })
     }
   }

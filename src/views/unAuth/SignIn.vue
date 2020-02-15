@@ -43,7 +43,7 @@
               <button
                 type="button"
                 class="btn btn-primary btn-block btn-flat"
-                @click="signIn"
+                @click="signIn()"
               >
                 Sign In
               </button>
@@ -74,7 +74,7 @@ export default {
     signIn () {
       signInApi(this.user).then(res => {
         store.commit('setAuthorization', res.token)
-        this.$router.push({ path: '/' });
+        this.$router.push({ name: 'Home' });
       }).catch(e => {
         this.$toasted.error(e.response.data.message)
       })

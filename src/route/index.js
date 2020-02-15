@@ -1,28 +1,32 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import SignInComponent from '@/views/unAuth/signIn'
-import DashboardComponent from '@/views/dashboard'
+import SignInComponent from '@/views/unAuth/SignIn'
+import HomeComponent from '@/views/home'
+import OverviewComponent from '@/views/home/Overview'
 import store from '@/store'
 
 Vue.use(VueRouter)
-
-export const signInPath = '/ap/sign-in'
 
 const router = new VueRouter({
   mode: 'history',
   routes: [
     {
-      path: signInPath,
-      name: 'signIn',
+      path: '/ap/sign-in',
+      name: 'SignIn',
       component: SignInComponent,
       meta: {
-        requireAuth: false
+        requiresAuth: false
       }
     },
     {
       path: '/',
-      name: 'dashboard',
-      component: DashboardComponent
+      name: 'ControlPanel',
+      component: HomeComponent,
+      children: [{
+        name: 'Home',
+        path: '/home',
+        component: OverviewComponent
+      }]
     }
   ]
 })
@@ -30,15 +34,19 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let token = store.getters.getAuthorization()
 
-  if (to.meta.requireAuth === false) {
+  if (to.path === '/') {
+    next({ name: 'Home'} )
+  }
+
+  if (to.meta.requiresAuth === false) {
     if (token !== '') {
-      next('/')
+      next({ name: 'Home'} )
     } else {
       next()
     }
   } else {
     if (token === '') {
-      next(signInPath)
+      next({ name: 'SignIn'} )
     } else {
       next()
     }

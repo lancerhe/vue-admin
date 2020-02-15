@@ -44,15 +44,15 @@
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                 <img src="http://cn.gravatar.com/avatar/79f92247e46b21715f6c3c9f2682008b?s=25" class="user-image" alt="User Image">
-                <span class="hidden-xs">何勇</span>
+                <span class="hidden-xs">Lancer He</span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
                 <li class="user-header">
-                  <img src="http://cn.gravatar.com/avatar/79f92247e46b21715f6c3c9f2682008b?s=90" class="img-circle" alt="何勇">
+                  <img src="http://cn.gravatar.com/avatar/79f92247e46b21715f6c3c9f2682008b?s=90" class="img-circle" alt="Lancer He">
 
                   <p>
-                    何勇
+                    Lancer He
                     <small>Member since 2018-03-13 13:57</small>
                   </p>
                 </li>
@@ -86,17 +86,17 @@
             <img src="http://cn.gravatar.com/avatar/79f92247e46b21715f6c3c9f2682008b?s=45" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p>何勇</p>
+            <p>Lancer He</p>
             <i class="fa fa-circle text-success"/> Online
           </div>
         </div>
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="">
-            <a href="/">
+            <router-link :to="{ name: 'Home' }">
               <i class="fa fa-fw fa-dashboard "/>
               <span>Home</span>
-            </a>
+            </router-link>
           </li>
           <li class="header">ADMIN SYSTEM</li>
           <li class="treeview">
@@ -139,6 +139,7 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+      <router-view />
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
@@ -154,7 +155,7 @@ export default {
   methods: {
     signOut() {
       store.commit('clearAuthorization')
-      this.$router.push({ path: signInPath });
+      this.$router.push({ name: 'SignIn' });
     }
   }
 }

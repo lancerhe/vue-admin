@@ -13,6 +13,10 @@ const store = new Vuex.Store({
     setAuthorization (state, authorization) {
       state.authorization = authorization
       localStorage.setItem('Authorization', authorization)
+    },
+    clearAuthorization(state) {
+      state.authorization = ''
+      localStorage.removeItem('Authorization')
     }
   },
 

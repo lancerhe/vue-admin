@@ -72,8 +72,9 @@ export default {
   },
   methods: {
     signIn () {
-      signInApi(this.user).then(responseBody => {
-        store.commit('setAuthorization', responseBody.token)
+      signInApi(this.user).then(res => {
+        store.commit('setAuthorization', res.token)
+        this.$router.push({ path: '/' });
       }).catch(e => {
         this.$toasted.error(e.response.data.message)
       })

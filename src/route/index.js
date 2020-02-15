@@ -6,13 +6,17 @@ import store from '@/store'
 
 Vue.use(VueRouter)
 
-const signInPath = '/ap/sign-in'
+export const signInPath = '/ap/sign-in'
+
 const router = new VueRouter({
   routes: [
     {
       path: signInPath,
       name: 'signIn',
-      component: SignInComponent
+      component: SignInComponent,
+      meta: {
+        requireAuth: false
+      }
     },
     {
       path: '/',
@@ -23,12 +27,16 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === signInPath) {
-    next()
-  } else {
+  let token = store.getters.getAuthorization()
 
-    let token = store.getters.getAuthorization()
-    if (token === 'null' || token === '') {
+  if (to.meta.requireAuth === false) {
+    if (token !== '') {
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    if (token === '') {
       next(signInPath)
     } else {
       next()
